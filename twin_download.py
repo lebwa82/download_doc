@@ -6,9 +6,9 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 
 
-def get_pandas_from_google_sheets(spreadsheet_id, CREDENTIALS_FILE='twin_creds.json', output_filename="output.csv"):
-    '''This function gets the file from the Google Developer Console and
-     the ID of the Google Sheets document (can be taken from its URL)
+def get_pandas_from_google_sheets(spreadsheet_id, CREDENTIALS_FILE='twin_creds.json', output_filename=None):
+    '''This function gets the CREDENTIALS_FILE from the Google Developer Console and
+     the spreadsheet_id of the Google Sheets document (can be taken from its URL)
      It gets data from this table and returns pandas'''
 
     # Авторизуемся и получаем service — экземпляр доступа к API
@@ -28,9 +28,10 @@ def get_pandas_from_google_sheets(spreadsheet_id, CREDENTIALS_FILE='twin_creds.j
 
     data_pandas=pandas.DataFrame(values['values'])
     #print(d)
-    data_pandas.to_csv(output_filename, index=False, header=False)
+    if output_filename:
+        data_pandas.to_csv(output_filename, index=False, header=False)
     return data_pandas
 
 
 if __name__ == '__main__':
-    get_pandas_from_google_sheets('1h_MA67-SV3SmfM92aT-NS3I4aHZ4bqa4rQZhcVx7Ehk')
+    get_pandas_from_google_sheets(spreadsheet_id ='1h_MA67-SV3SmfM92aT-NS3I4aHZ4bqa4rQZhcVx7Ehk', output_filename = "out.csv")
